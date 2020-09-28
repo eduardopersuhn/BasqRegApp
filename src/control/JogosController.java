@@ -19,12 +19,20 @@ public class JogosController {
 		load();
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void load() {
 		File file;
 		ObjectInputStream in;
 		
 		try {
+			
 			file = new File("./jogos.ser");
+			
+			if (!file.exists()) {
+				file.createNewFile();
+				save();
+			}
+			
 			in   = new ObjectInputStream(new FileInputStream(file));
 			
 			jogos = (ArrayList<Jogo>) in.readObject();
@@ -37,9 +45,14 @@ public class JogosController {
 	}
 	
 	private void save() {
+		
 		try {
+			
 			File file = new File("./jogos.ser");
 			
+			if (!file.exists()) {
+				file.createNewFile();
+			}
 			
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 			
