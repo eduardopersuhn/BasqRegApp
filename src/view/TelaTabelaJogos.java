@@ -17,7 +17,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
 
-import control.JogosController;
+import control.JogosPersist;
 import model.Jogo;
 import utility.JogosUtility;
 
@@ -43,9 +43,6 @@ public class TelaTabelaJogos extends JDialog {
 	private JFormattedTextField campoNumAdd;
 	private JFormattedTextField campoPlacarAdd;
 	private JFormattedTextField campoNumRemover;
-	
-	
-	private JogosController controller;
 
 	/**
 	 * Launch the application.
@@ -68,7 +65,6 @@ public class TelaTabelaJogos extends JDialog {
 	 */
 	public TelaTabelaJogos(JFrame frame) {
 		super(frame);
-		controller = new JogosController();
 		
 		DecimalFormat decimalFormat = new DecimalFormat();
 		decimalFormat.setGroupingUsed(false);
@@ -77,7 +73,7 @@ public class TelaTabelaJogos extends JDialog {
 		NumberFormatter formatterPlacar = new NumberFormatter(decimalFormat);
 		formatterPlacar.setValueClass(Integer.class);
 		formatterPlacar.setMinimum(0);
-		formatterPlacar.setMaximum(1000);
+		formatterPlacar.setMaximum(999);
 		formatterPlacar.setAllowsInvalid(false);
 		formatterPlacar.setCommitsOnValidEdit(true);
 		
@@ -207,7 +203,7 @@ public class TelaTabelaJogos extends JDialog {
 		Jogo[] jogos;
 		ArrayList<Jogo> aux = new ArrayList<>();
 		
-		jogos = controller.getTodosJogos();
+		jogos = JogosPersist.getInstance().getTodosJogos();
 		
 		Arrays.sort(jogos);
 		
@@ -238,7 +234,7 @@ public class TelaTabelaJogos extends JDialog {
 	private void removerJogo() {
 		Jogo jogo = new Jogo(Integer.parseInt(campoNumRemover.getText()), 0);
 		
-		boolean removido = controller.removeJogo(jogo);
+		boolean removido = JogosPersist.getInstance().removeJogo(jogo);
 		
 		if (removido) {
 			atualizarTabela();
@@ -253,7 +249,7 @@ public class TelaTabelaJogos extends JDialog {
 	private void addJogo() {
 		Jogo jogo = new Jogo(Integer.parseInt(campoNumAdd.getText()), Integer.parseInt(campoPlacarAdd.getText()));
 		
-		boolean adicionado = controller.addJogo(jogo);
+		boolean adicionado = JogosPersist.getInstance().addJogo(jogo);
 		
 		if (adicionado) {
 			atualizarTabela();

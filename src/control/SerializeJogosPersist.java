@@ -9,11 +9,11 @@ import java.util.ArrayList;
 
 import model.Jogo;
 
-public class JogosController {
+public class SerializeJogosPersist extends JogosPersist {
 	
 	private ArrayList<Jogo> jogos;
 	
-	public JogosController() {
+	public SerializeJogosPersist() {
 		jogos = new ArrayList<>();
 		
 		load();
@@ -65,6 +65,7 @@ public class JogosController {
 		} 
 	}
 	
+	@Override
 	public Jogo[] getTodosJogos() {
 		Jogo[] temp = new Jogo[jogos.size()];
 		
@@ -73,6 +74,7 @@ public class JogosController {
 		return temp;
 	}
 	
+	@Override
 	public boolean addJogo(Jogo jogo) {
 		boolean adicionado;
 		
@@ -89,6 +91,7 @@ public class JogosController {
 		return adicionado;
 	}
 	
+	@Override
 	public boolean removeJogo(Jogo jogo) {
 		boolean removido;
 		
