@@ -35,6 +35,13 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.border.EtchedBorder;
 
+
+/**
+ * Tela para manipulação do registro dos jogos. 
+ * Parcialmente gerado pelo plugin "Window builder" do eclipse.
+ * 
+ * Fiz apenas algumas alterações "manualmente" que foram necessarias.
+ */
 @SuppressWarnings("serial")
 public class TelaTabelaJogos extends JDialog {
 
@@ -88,8 +95,6 @@ public class TelaTabelaJogos extends JDialog {
 		
 		setType(Type.NORMAL);
 		setTitle("BasqRegApp");
-		
-		// LookAndFeel.set();
 		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 800, 500);
@@ -198,11 +203,13 @@ public class TelaTabelaJogos extends JDialog {
 		};
 	}
 	
+	// Em caso de alteração no registro de jogos (inserção e remoção) a tabela deve ser atualizada para o usuário
 	private void atualizarTabela() {
 		DefaultTableModel model = getTableModel();
 		Jogo[] jogos;
 		ArrayList<Jogo> aux = new ArrayList<>();
 		
+		// Busca os jogos persistidos
 		jogos = JogosPersist.getInstance().getTodosJogos();
 		
 		Arrays.sort(jogos);
@@ -214,8 +221,8 @@ public class TelaTabelaJogos extends JDialog {
 					jogo.getPlacar(), 
 					JogosUtility.getPlacarMinTemporada(aux), 
 					JogosUtility.getPlacarMaxTemporada(aux), 
-					null, 
-					null });
+					JogosUtility.getVezesRecordeMin(aux), 
+					JogosUtility.getVezesRecordeMax(aux) });
 		}
 		
 		table.setModel(model);
@@ -234,6 +241,7 @@ public class TelaTabelaJogos extends JDialog {
 	private void removerJogo() {
 		Jogo jogo = new Jogo(Integer.parseInt(campoNumRemover.getText()), 0);
 		
+		// Remove um jogo persistido de acordo com seu número de identificação
 		boolean removido = JogosPersist.getInstance().removeJogo(jogo);
 		
 		if (removido) {
@@ -249,10 +257,12 @@ public class TelaTabelaJogos extends JDialog {
 	private void addJogo() {
 		Jogo jogo = new Jogo(Integer.parseInt(campoNumAdd.getText()), Integer.parseInt(campoPlacarAdd.getText()));
 		
+		// Persiste o jogo
 		boolean adicionado = JogosPersist.getInstance().addJogo(jogo);
 		
 		if (adicionado) {
 			atualizarTabela();
+			campoPlacarAdd.selectAll();
 			
 		} else {
 			JOptionPane.showMessageDialog(this, "Numero " + jogo.getNum() + " ja cadastrado!", "ERRO", JOptionPane.ERROR_MESSAGE);
@@ -265,6 +275,7 @@ public class TelaTabelaJogos extends JDialog {
 		campoNumAdd.setText((numAdd + 1) + "");
 		campoPlacarAdd.setText("0");
 		campoNumRemover.setText("0");
+		campoNumRemover.selectAll();
 	}
 	
 	private void resetarCampos() {

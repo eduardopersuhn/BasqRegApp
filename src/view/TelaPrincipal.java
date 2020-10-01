@@ -14,6 +14,10 @@ import javax.swing.JMenu;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+
+/**
+ * Tela principal. Parcialmente gerado pelo plugin "Window builder" do eclipse.
+ */
 @SuppressWarnings("serial")
 public class TelaPrincipal extends JFrame {
 
@@ -35,9 +39,6 @@ public class TelaPrincipal extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public TelaPrincipal() {
 		
 		LookAndFeel.set();
@@ -50,9 +51,6 @@ public class TelaPrincipal extends JFrame {
 		
 		JMenu mnMenu = new JMenu("Arquivo");
 		menuBar.add(mnMenu);
-		
-		JMenuItem mntmSalvar = new JMenuItem("Salvar");
-		mnMenu.add(mntmSalvar);
 		
 		JMenuItem mntmSair = new JMenuItem("Sair");
 		mntmSair.addActionListener(new ActionListener() {

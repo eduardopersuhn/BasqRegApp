@@ -9,11 +9,16 @@ import java.util.ArrayList;
 
 import model.Jogo;
 
-public class SerializeJogosPersist extends JogosPersist {
+/**
+ * Implementação da persistência dos jogos a serem registrados por meio de arquivo em disco.
+ * Serializando um "ArrayList" contendo os jogos.
+ * Optei por serializar para manter a simplicidade, mas pode ser fácilmente modificado para outra forma sem impactar no restante da aplicação.
+ */
+public final class SerializeJogosPersist extends JogosPersist {
 	
 	private ArrayList<Jogo> jogos;
 	
-	public SerializeJogosPersist() {
+	protected SerializeJogosPersist() {
 		jogos = new ArrayList<>();
 		
 		load();

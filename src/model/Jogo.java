@@ -2,6 +2,10 @@ package model;
 
 import java.io.Serializable;
 
+/**
+ * Classe que representa o registro de um jogo que será utilizado pela aplicação.
+ * 
+ */
 public class Jogo implements Serializable, Comparable<Jogo> {
 	
 	private static final long serialVersionUID = 2617956552686531110L;
@@ -14,15 +18,23 @@ public class Jogo implements Serializable, Comparable<Jogo> {
 	}
 	
 	public Jogo(int num, int placar) {
-		this.num = num;
-		this.placar = placar;
+		setNum(num);
+		setPlacar(placar);
+	}
+	
+	public Jogo(Jogo jogo) {
+		this.replaceValues(jogo);
 	}
 
 	public int getNum() {
 		return num;
 	}
 
-	public void setNum(int num) {
+	public void setNum(int num) throws IllegalArgumentException {
+		
+		if (num < 0) {
+			throw new IllegalArgumentException();
+		}
 		this.num = num;
 	}
 
@@ -30,8 +42,19 @@ public class Jogo implements Serializable, Comparable<Jogo> {
 		return placar;
 	}
 
-	public void setPlacar(int placar) {
+	public void setPlacar(int placar) throws IllegalArgumentException  {
+		
+		// Segundo descrito na questão prática o placar tem que ser positivo e menor que 1000
+		if (placar < 0 || placar >= 1000) {
+			throw new IllegalArgumentException();
+		}
+		
 		this.placar = placar;
+	}
+	
+	public void replaceValues(Jogo jogo) {
+		setNum(jogo.getNum());
+		setPlacar(jogo.getPlacar());
 	}
 	
 	@Override
